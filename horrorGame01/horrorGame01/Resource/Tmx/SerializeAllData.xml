@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestData>
+  <TestData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <objType>Object</objType>
+    <objName>Cube</objName>
+    <pos>
+      <x>-1.9</x>
+      <y>2.02</y>
+      <z>-0.24</z>
+    </pos>
+    <rota>
+      <x>0.353553444</x>
+      <y>0</y>
+      <z>0.612372339</z>
+      <w>0.707106769</w>
+      <eulerAngles>
+        <x>30.0000114</x>
+        <y>30.0000076</y>
+        <z>90</z>
+      </eulerAngles>
+    </rota>
+    <scale>
+      <x>1</x>
+      <y>1</y>
+      <z>1</z>
+    </scale>
+  </TestData>
+  <TestData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <objType>Object</objType>
+    <objName>Cube</objName>
+    <pos>
+      <x>0</x>
+      <y>2.02</y>
+      <z>-3.094</z>
+    </pos>
+    <rota>
+      <x>0</x>
+      <y>0.2588191</y>
+      <z>0</z>
+      <w>0.9659258</w>
+      <eulerAngles>
+        <x>-0</x>
+        <y>30.0000076</y>
+        <z>0</z>
+      </eulerAngles>
+    </rota>
+    <scale>
+      <x>1</x>
+      <y>1</y>
+      <z>1</z>
+    </scale>
+  </TestData>
+</TestData>

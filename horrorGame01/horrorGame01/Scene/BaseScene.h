@@ -16,7 +16,7 @@ public:
 	/// 更新処理
 	/// </summary>
 	/// <returns>基本的に自分自身を返すが、シーン移動する場合は新しいシーンを返す</returns>
-	virtual UniqueBase Update(void) = 0;
+	virtual UniqueBase Update(UniqueBase scene) = 0;
 	virtual void Draw(void);
 	/// <summary>
 	/// シーンの描画

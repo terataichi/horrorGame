@@ -129,7 +129,7 @@ Vector2Template<T>& Vector2Template<T>::operator/=(const Vector2Template& vec)
 	}
 	else
 	{
-		x_ = 0;
+		y_ = 0;
 	}
 	return *this;
 }

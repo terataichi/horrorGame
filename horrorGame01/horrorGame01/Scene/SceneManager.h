@@ -4,7 +4,7 @@
 
 class BaseScene;
 
-#define lpSceneMng SceneManager::GetInstance();
+#define lpSceneMng SceneManager::GetInstance()
 
 class SceneManager
 {
@@ -19,16 +19,19 @@ public:
 	void Update(void);
 	void Draw(void);
 
-	const Size screenSize_;
-private:
-	std::unique_ptr<BaseScene> scene_;
-
 	/// <summary>
 	/// システムの初期化
 	/// </summary>
 	/// <returns>false : 失敗</returns>
 	bool SystemInit(void);
-	bool initFlag_;							 // 初期化が成功したかどうか
+	// 3DInitにしようと思ったけど頭に数字付けたらエラーでた
+	bool Init3D(void);
+
+	const Size& ScreenSize(void);
+
+private:
+	std::unique_ptr<BaseScene> scene_;
+	const Size screenSize_;
 	SceneManager();
 	~SceneManager();
 };
