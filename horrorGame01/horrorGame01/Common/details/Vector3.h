@@ -4,7 +4,7 @@
 #include <cassert>
 
 template<class T>
-Vector3Template<T>::Vector3Template()
+Vector3Template<T>::Vector3Template() :x_(0), y_(0), z_(0)
 {
 }
 

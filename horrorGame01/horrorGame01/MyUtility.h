@@ -5,6 +5,7 @@
 
 static class MyUtility
 {
+public:
 	// VECTOR‚É•ÏŠ·‚·‚é
 	static VECTOR VGet(const Vector3f& vec);
 };
