@@ -23,3 +23,18 @@ const Vector3f& BaseObject::Scale(void) const
 {
     return scale_;
 }
+
+void BaseObject::Potision(Vector3f& pos)
+{
+    pos_ = pos;
+}
+
+void BaseObject::Angle(Vector3f& ang)
+{
+    angle_ = ang;
+}
+
+void BaseObject::Scale(Vector3f& scale)
+{
+    scale_ = scale;
+}

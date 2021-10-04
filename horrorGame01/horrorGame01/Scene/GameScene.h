@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseScene.h"
+#include <memory>
 
+class Stage;
 class GameScene
 	:public BaseScene
 {
@@ -21,6 +23,6 @@ public:
 	void DrawOwnScene(void);
 
 private:
-
+	std::unique_ptr<Stage> stage_;
 };
 

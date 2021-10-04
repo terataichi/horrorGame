@@ -16,9 +16,13 @@ void SceneManager::Run(void)
 	{
 		_dbgStartDraw();
 		lpTimeManager.Update();
+		// Ž©g‚ð“n‚µ‚Ä‚ ‚°‚é
+		scene_ = scene_->Update(std::move(scene_));
 
 		DxLib::SetDrawScreen(DX_SCREEN_BACK);
 		DxLib::ClsDrawScreen();
+
+		scene_->Draw();
 
 		_dbgAddDraw();
 		DxLib::ScreenFlip();

@@ -2,7 +2,8 @@
 #include <memory>
 
 #include "../BaseObject.h"
-#include "../../Model/Model.h"
+
+class Model;
 
 class Stage :
     public BaseObject
@@ -10,6 +11,10 @@ class Stage :
 public:
     Stage(Vector3f&& pos, Vector3f&& angle, Vector3f&& scale);
     ~Stage();
+
+    bool Init(void)override;
+    bool Update(void)override;
+    void Draw(void)override;
 
 private:
 

@@ -14,9 +14,9 @@ Model::~Model()
 {
 }
 
-bool Model::LoadModel(std::string& str)
+bool Model::LoadModel(std::string str)
 {
-	modelHandle_ = MV1LoadModel(str.c_str());
+	modelHandle_ = MV1LoadModel("Resource/Model/untitled.mv1");
 
 	if (modelHandle_ == -1)
 	{
@@ -36,7 +36,7 @@ bool Model::LoadModel(std::string& str)
 	return true;
 }
 
-bool Model::LoadModelAndAnimation(std::string& str)
+bool Model::LoadModelAndAnimation(std::string str)
 {
 	if (!LoadModel(str))
 	{
@@ -80,9 +80,28 @@ void Model::LocalAngle(Vector3f& angle)
 	localAngle_ = angle;
 }
 
-void Model::Init(void)
+bool Model::Init(void)
 {
 	animToralTime_ = -1;
 	animStepTime_ = -1;
 	animSpeed_ = 0;
+	modelHandle_ = 0;
+	return true;
+}
+
+bool Model::Update(void)
+{
+	return false;
+}
+
+void Model::Draw(void)
+{
+	auto angle = angle_;
+	angle.x_ += localAngle_.x_;
+	angle.y_ += localAngle_.y_;
+	angle.z_ += localAngle_.z_;
+	MV1SetRotationXYZ(modelHandle_, MyUtility::VGet(angle));
+	MV1SetPosition(modelHandle_, MyUtility::VGet(pos_));
+
+	MV1DrawModel(modelHandle_);
 }

@@ -12,11 +12,11 @@ public:
 
 	operator Vector3Template<int>()
 	{
-		return Vector3Template<int>{ static_cast<int>(x_), static_cast<int>(y_) };
+		return Vector3Template<int>{ static_cast<int>(x_), static_cast<int>(y_), static_cast<int>(z_) };
 	};
 	operator Vector3Template<float>()
 	{
-		return Vector3Template<float>{ static_cast<float>(x_), static_cast<float>(y_) };
+		return Vector3Template<float>{ static_cast<float>(x_), static_cast<float>(y_), static_cast<float>(z_) };
 	};
 
 	Vector3Template operator + ()const;
@@ -98,7 +98,7 @@ using Vector3f = Vector3Template<float>;
 using Potision3 = Vector3;
 using Potision3f = Vector3f;
 
-using Size = Vector3;
-using Sizef = Vector3f;
+using Size3 = Vector3;
+using Size3f = Vector3f;
 
 #include "details/Vector3.h"

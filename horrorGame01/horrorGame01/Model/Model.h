@@ -14,17 +14,21 @@ public:
 	Model(Vector3f pos, Vector3f angle, Vector3f scale, Vector3f localAngle);
 	~Model();
 
+	bool Init(void)override;
+	bool Update(void)override;
+	void Draw(void)override;
+
 	/// <summary>
 	/// モデル読み込み
 	/// </summary>
 	/// <param name="str">Resource/Model/ 以降のパス</param>
 	/// <returns>false : 失敗</returns>
-	bool LoadModel(std::string& str);
+	bool LoadModel(std::string str);
 	/// <summary>
 	/// アニメーションがある場合
 	/// </summary>
 	/// <returns>false : 失敗</returns>
-	bool LoadModelAndAnimation(std::string& str);
+	bool LoadModelAndAnimation(std::string str);
 
 	/// <summary>
 	/// ---- Get,Set
@@ -33,7 +37,6 @@ public:
 	void LocalAngle(Vector3f& angle);
 
 private:
-	void Init(void);
 
 	// モデル読み込み用
 	int modelHandle_;
