@@ -6,7 +6,7 @@ class Camera :
     public BaseObject
 {
 public:
-    Camera(Vector3f pos, Vector3f angle, Vector3f scale = { 1.0f,1.0f,1.0f });
+    Camera(Vector3f pos, Vector3f angle, Vector3f scale, Vector3f offset = {});
     ~Camera();
 
     bool Init(void)override;
@@ -18,5 +18,8 @@ private:
 
     // カメラが追従するオブジェクトのポインタ
     std::weak_ptr<BaseObject> targetObj_;
+
+    Vector3f offset_;
+    float height_;
 };
 

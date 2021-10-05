@@ -1,3 +1,4 @@
+
 #include "Stage.h"
 #include "../../Model/Model.h"
 
@@ -20,7 +21,9 @@ bool Stage::Init(void)
 
 bool Stage::Update(void)
 {
-	return false;
+	//pos_.x_ += 1.0f;
+	//model_->Potision(pos_);
+	return true;
 }
 
 void Stage::Draw(void)

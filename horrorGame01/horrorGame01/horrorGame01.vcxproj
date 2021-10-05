@@ -159,10 +159,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Input\InputManager.cpp" />
+    <ClCompile Include="Input\BaseInput.cpp" />
+    <ClCompile Include="Input\InputID.cpp" />
+    <ClCompile Include="Input\Keyboard.cpp" />
+    <ClCompile Include="Input\MouseID.cpp" />
     <ClCompile Include="Model\Model.cpp" />
+    <ClCompile Include="Input\Mouse.cpp" />
     <ClCompile Include="MyUtility.cpp" />
     <ClCompile Include="Object\BaseObject.cpp" />
     <ClCompile Include="Object\Camera\Camera.cpp" />
+    <ClCompile Include="Object\Character\Player.cpp" />
     <ClCompile Include="Object\Stage\Stage.cpp" />
     <ClCompile Include="Task\TaskManager.cpp" />
     <ClCompile Include="Task\BaseTask.cpp" />
@@ -179,10 +186,17 @@
   <ItemGroup>
     <ClInclude Include="Common\details\Vector3.h" />
     <ClInclude Include="Common\Vector3.h" />
+    <ClInclude Include="Input\InputManager.h" />
+    <ClInclude Include="Input\BaseInput.h" />
+    <ClInclude Include="Input\InputID.h" />
+    <ClInclude Include="Input\Keyboard.h" />
+    <ClInclude Include="Input\MouseID.h" />
     <ClInclude Include="Model\Model.h" />
+    <ClInclude Include="Input\Mouse.h" />
     <ClInclude Include="MyUtility.h" />
     <ClInclude Include="Object\BaseObject.h" />
     <ClInclude Include="Object\Camera\Camera.h" />
+    <ClInclude Include="Object\Character\Player.h" />
     <ClInclude Include="Object\Stage\Stage.h" />
     <ClInclude Include="RapidXml\rapidxml.hpp" />
     <ClInclude Include="RapidXml\rapidxml_iterators.hpp" />

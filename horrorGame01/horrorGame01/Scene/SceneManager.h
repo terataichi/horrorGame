@@ -3,6 +3,7 @@
 #include "../Common/Vector2.h"
 
 class BaseScene;
+class InputManager;
 
 #define lpSceneMng SceneManager::GetInstance()
 
@@ -26,11 +27,14 @@ public:
 	bool SystemInit(void);
 	// 3DInitにしようと思ったけど頭に数字付けたらエラーでた
 	bool Init3D(void);
+	// 入力情報管理クラス取得
+	std::weak_ptr<InputManager>GetInputManager(void);
 
 	const Size& ScreenSize(void);
 
 private:
 	std::unique_ptr<BaseScene> scene_;
+	std::shared_ptr<InputManager> input_;
 	const Size screenSize_;
 	SceneManager();
 	~SceneManager();

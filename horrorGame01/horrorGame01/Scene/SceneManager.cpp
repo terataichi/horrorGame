@@ -6,26 +6,32 @@
 #include "../Common/TimeManager.h"
 #include "BaseScene.h"
 #include "GameScene.h"
+#include "../Object/Camera/Camera.h"
+#include "../Input/InputManager.h"
 
 void SceneManager::Run(void)
 {
 
 	scene_ = std::make_unique<GameScene>();
+	input_ = std::make_shared<InputManager>();
 
 	while (DxLib::ProcessMessage() == 0 && !DxLib::CheckHitKey(KEY_INPUT_ESCAPE))
 	{
 		_dbgStartDraw();
 		lpTimeManager.Update();
+		input_->Update();
 		// 自身を渡してあげる
 		scene_ = scene_->Update(std::move(scene_));
+		scene_->UpdateCamera();
+		scene_->DrawOwnScene();
 
-		DxLib::SetDrawScreen(DX_SCREEN_BACK);
-		DxLib::ClsDrawScreen();
+		SetDrawScreen(DX_SCREEN_BACK);
+		ClsDrawScreen();
 
 		scene_->Draw();
 
 		_dbgAddDraw();
-		DxLib::ScreenFlip();
+		ScreenFlip();
 	}
 	DxLib_End();
 }
@@ -48,10 +54,8 @@ bool SceneManager::SystemInit(void)
 		TRACE("DxLib初期化失敗しました");
 		return false;
 	}
-
 	// 3D系初期化
 	Init3D();
-
 	// デバッグ
 	_dbgSetup(screenSize_.x_, screenSize_.y_, 255);
     return true;
@@ -70,14 +74,21 @@ bool SceneManager::Init3D(void)
 	SetUseBackCulling(true);
 
 	// カメラのクリップ距離の設定
-	SetCameraNearFar(0.0f, 1500.0f);
+	SetCameraNearFar(1.0f, 100.0f);
 
 	// ライトの設定
 	ChangeLightTypeDir({ 0.3f,-3.7f,-0.8f });
 
+	SetUseLighting(false);
+
 	// 3Dの背景色
 	SetBackgroundColor(0, 139, 50);
 	return true;
+}
+
+std::weak_ptr<InputManager> SceneManager::GetInputManager(void)
+{
+	return input_;
 }
 
 const Size& SceneManager::ScreenSize(void)

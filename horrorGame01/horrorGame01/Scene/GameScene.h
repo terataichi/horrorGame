@@ -2,7 +2,9 @@
 #include "BaseScene.h"
 #include <memory>
 
-class Stage;
+class BaseObject;
+class Camera;
+
 class GameScene
 	:public BaseScene
 {
@@ -16,13 +18,13 @@ public:
 	/// </summary>
 	/// <returns>基本的に自分自身を返すが、シーン移動する場合は新しいシーンを返す</returns>
 	UniqueBase Update(UniqueBase scene);
-	void Draw(void);
 	/// <summary>
 	/// シーンの描画
 	/// </summary>
 	void DrawOwnScene(void);
 
 private:
-	std::unique_ptr<Stage> stage_;
+	std::shared_ptr<BaseObject> stage_;
+	std::shared_ptr<BaseObject> player_;
 };
 

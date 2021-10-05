@@ -4,6 +4,7 @@
 
 class BaseScene;
 using UniqueBase = std::unique_ptr<BaseScene>;
+class Camera;
 
 class BaseScene
 {
@@ -22,9 +23,20 @@ public:
 	/// シーンの描画
 	/// </summary>
 	virtual void DrawOwnScene(void) = 0;
+	/// <summary>
+	/// カメラの更新
+	/// </summary>
+	bool UpdateCamera(void);
+	/// <summary>
+	/// カメラの描画
+	/// </summary>
+	bool DrawCamera(void);
 protected:
 	int screenID_;
 	Size screenSize_;
+
+	// どこで持つか迷ったけどマネージャーだと違和感あるから一旦各シーンで持つ
+	std::shared_ptr<Camera> camera_;
 private:
 };
 
