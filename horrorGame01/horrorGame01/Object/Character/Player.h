@@ -23,6 +23,9 @@ private:
 	// Ž‹“_‰ñ“]
 	bool Rotate(float& delta);
 
+	// ‰ñ“]‘¬“x
+	float rotateSpeedX_;
+
 	static constexpr float MOVESPEED = 200.0f;
 
 };

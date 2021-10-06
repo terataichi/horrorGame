@@ -27,6 +27,7 @@ Player::~Player()
 
 bool Player::Init(void)
 {
+	rotateSpeedX_ = 10;
 	return false;
 }
 
@@ -112,8 +113,8 @@ bool Player::Rotate(float& delta)
 
 	if (diff != Vector2{0,0})
 	{
-		angle_.x_ -= MyUtility::DegToRad(diff.y_ * 40 * delta);
-		angle_.y_ -= MyUtility::DegToRad(diff.x_ * 40 * delta);
+		angle_.x_ -= MyUtility::DegToRad(diff.y_ * rotateSpeedX_ * delta);
+		angle_.y_ -= MyUtility::DegToRad(diff.x_ * rotateSpeedX_ * delta);
 	}
 
 	auto p = lpSceneMng.ScreenSize() / 2;

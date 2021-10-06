@@ -74,15 +74,15 @@ bool SceneManager::Init3D(void)
 	SetUseBackCulling(true);
 
 	// カメラのクリップ距離の設定
-	SetCameraNearFar(1.0f, 100.0f);
+	SetCameraNearFar(0.1f, 150.0f);
 
 	// ライトの設定
 	ChangeLightTypeDir({ 0.3f,-3.7f,-0.8f });
 
-	SetUseLighting(false);
+	SetUseLighting(true);
 
 	// 3Dの背景色
-	SetBackgroundColor(0, 139, 50);
+	SetBackgroundColor(0, 0, 0);
 	return true;
 }
 

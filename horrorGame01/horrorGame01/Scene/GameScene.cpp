@@ -28,9 +28,9 @@ void GameScene::Init(void)
 
 	stage_ = std::make_shared<Stage>(Vector3f{0.0f,0.0f,0.0f}, Vector3f{}, Vector3f{});
 	player_ = std::make_shared<Player>(Vector3f{ 0.0f,0.0f,0.0f }, Vector3f{}, Vector3f{});
-
-
 	camera_->SetTarget(player_);
+
+	bright_ = 255;
 }
 
 UniqueBase GameScene::Update(UniqueBase scene)
@@ -43,8 +43,12 @@ UniqueBase GameScene::Update(UniqueBase scene)
 void GameScene::DrawOwnScene(void)
 {
 	SetDrawScreen(screenID_);
-	camera_->Draw();
+	// カメラのクリップ距離の設定
+	SetCameraNearFar(1.0f, 1000.0f);
+	SetDrawBright(bright_, bright_, bright_);
+
 	ClsDrawScreen();
 
+	camera_->Draw();
 	stage_->Draw();
 }

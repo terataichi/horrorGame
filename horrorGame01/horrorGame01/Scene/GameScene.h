@@ -26,5 +26,6 @@ public:
 private:
 	std::shared_ptr<BaseObject> stage_;
 	std::shared_ptr<BaseObject> player_;
+	int bright_;								// –¾‚é‚³
 };
 
