@@ -1,7 +1,7 @@
 #include "BaseObject.h"
 
-BaseObject::BaseObject(const Vector3f& pos, const Vector3f& angle, const Vector3f& scale)
-    :pos_(pos),angle_(angle),scale_(scale)
+BaseObject::BaseObject(const Vector3f& pos, const Vector3f& angle, const Vector3f& scale, ObjectType type)
+    :pos_(pos),angle_(angle),scale_(scale),objType_(type)
 {
 }
 

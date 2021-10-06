@@ -11,11 +11,10 @@ TmxLoader::TmxLoader()
     version_.try_emplace("1.4.3", 1);
     version_.try_emplace("1.5", 1);
 
-    stoDataType_.try_emplace("Object", DataType::Object);
     stoDataType_.try_emplace("Item", DataType::Item);
     stoDataType_.try_emplace("EnemyPoint", DataType::EnemyPoint);
     stoDataType_.try_emplace("StartPoint", DataType::StartPoint);
-    stoDataType_.try_emplace("Right", DataType::Right);
+    stoDataType_.try_emplace("Right", DataType::Light);
 
 }
 
@@ -44,21 +43,21 @@ bool TmxLoader::LoadTmx(std::string fileName)
         objData.type = data_node->first_node("objType")->value();
         objData.name = data_node->first_node("objName")->value();
 
-        objData.pos.x = atoi(data_node->first_node("pos")->first_node("x")->value());
-        objData.pos.y = atoi(data_node->first_node("pos")->first_node("y")->value());
-        objData.pos.z = atoi(data_node->first_node("pos")->first_node("z")->value());
+        objData.pos.x_ = atof(data_node->first_node("pos")->first_node("x")->value());
+        objData.pos.y_ = atof(data_node->first_node("pos")->first_node("y")->value());
+        objData.pos.z_ = atof(data_node->first_node("pos")->first_node("z")->value());
 
-        objData.angle.x = atoi(data_node->first_node("rota")->first_node("eulerAngles")->first_node("x")->value());
-        objData.angle.y = atoi(data_node->first_node("rota")->first_node("eulerAngles")->first_node("y")->value());
-        objData.angle.z = atoi(data_node->first_node("rota")->first_node("eulerAngles")->first_node("z")->value());
+        objData.angle.x_ = atof(data_node->first_node("rota")->first_node("eulerAngles")->first_node("x")->value());
+        objData.angle.y_ = atof(data_node->first_node("rota")->first_node("eulerAngles")->first_node("y")->value());
+        objData.angle.z_ = atof(data_node->first_node("rota")->first_node("eulerAngles")->first_node("z")->value());
 
-        objData.scale.x = atoi(data_node->first_node("scale")->first_node("x")->value());
-        objData.scale.y = atoi(data_node->first_node("scale")->first_node("y")->value());
-        objData.scale.z = atoi(data_node->first_node("scale")->first_node("z")->value());
+        objData.scale.x_ = atof(data_node->first_node("scale")->first_node("x")->value());
+        objData.scale.y_ = atof(data_node->first_node("scale")->first_node("y")->value());
+        objData.scale.z_ = atof(data_node->first_node("scale")->first_node("z")->value());
 
         if (stoDataType_.count(objData.type))
         {
-            itemData_[stoDataType_[objData.type]].push_back(objData);
+            typeData_[stoDataType_[objData.type]].push_back(objData);
         }
     }
 
@@ -69,4 +68,9 @@ bool TmxLoader::LoadTmx(std::string fileName)
 std::string TmxLoader::GetTmxFileName(void)
 {
     return tmxFileName_;
+}
+
+TypeDataMap TmxLoader::GetTypeData(void) const
+{
+    return typeData_;
 }

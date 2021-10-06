@@ -3,20 +3,18 @@
 #include <vector>
 
 #include "../Common/Vector3.h"
-#include "../Object/BaseObject.h"
 
 // モデル情報保持クラス
 // ロードは関数呼んで
-class Model :
-	public BaseObject
+class Model
 {
 public:
-	Model(Vector3f pos, Vector3f angle, Vector3f scale, Vector3f localAngle);
+	Model(Vector3f pos, Vector3f angle, Vector3f scale, Vector3f localAngle = {});
 	~Model();
 
-	bool Init(void)override;
-	bool Update(void)override;
-	void Draw(void)override;
+	bool Init(void);
+	bool Update(void);
+	void Draw(void);
 
 	/// <summary>
 	/// モデル読み込み
@@ -37,6 +35,10 @@ public:
 	void LocalAngle(Vector3f& angle);
 
 private:
+
+	Vector3f pos_;
+	Vector3f angle_;
+	Vector3f scale_;
 
 	// モデル読み込み用
 	int modelHandle_;

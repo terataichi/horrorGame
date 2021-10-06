@@ -79,7 +79,11 @@ bool SceneManager::Init3D(void)
 	// ƒ‰ƒCƒg‚Ìİ’è
 	ChangeLightTypeDir({ 0.3f,-3.7f,-0.8f });
 
+	SetFogEnable(true);
+	SetFogColor(0, 0, 0);
+
 	SetUseLighting(true);
+	SetLightEnable(false);
 
 	// 3D‚Ì”wŒiF
 	SetBackgroundColor(0, 0, 0);

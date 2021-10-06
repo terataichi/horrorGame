@@ -2,10 +2,23 @@
 
 #include "../Common/Vector3.h"
 
+// Ž¯•Ê—p
+enum class ObjectType
+{
+	Non,
+	Item,
+	Camera,
+	Stage,
+	Player,
+	Enemy,
+	Max
+};
+
+
 class BaseObject
 {
 public:
-	BaseObject(const Vector3f& pos,const Vector3f& angle,const Vector3f& scale);
+	BaseObject(const Vector3f& pos,const Vector3f& angle,const Vector3f& scale,ObjectType type);
 	virtual ~BaseObject();
 
 	virtual bool Init(void) = 0;
@@ -24,7 +37,10 @@ public:
 	void Scale(Vector3f& scale);
 protected:
 	Vector3f pos_;
+	// ƒ‰ƒWƒAƒ“
 	Vector3f angle_;
 	Vector3f scale_;
+
+	const ObjectType objType_;
 };
 

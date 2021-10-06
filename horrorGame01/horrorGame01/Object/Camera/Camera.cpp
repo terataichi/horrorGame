@@ -9,7 +9,7 @@
 #include "../../Input/Mouse.h"
 
 Camera::Camera(Vector3f pos, Vector3f angle, Vector3f scale,Vector3f offset)
-    :BaseObject(pos, angle, scale),offset_(offset)
+    :BaseObject(pos, angle, scale,ObjectType::Camera),offset_(offset)
 {
     Init();
 }
@@ -23,6 +23,15 @@ bool Camera::Init(void)
     SetCameraPositionAndAngle(
         MyUtility::VGet(pos_), angle_.x_, angle_.y_, angle_.z_
     );
+
+    spotLight_ = CreateSpotLightHandle(MyUtility::VGet(pos_),
+        MyUtility::VGet(pos_),
+        DX_PI_F / 2.0f,
+        DX_PI_F / 4.0f,
+        1000.0f, 
+        0.5f,
+        0.01f,
+        0.0f);
 
     speedY_ = 10;
 
@@ -60,25 +69,20 @@ void Camera::Draw(void)
     height_ = min(max(height_, -MAX_HEIGHT), MAX_HEIGHT);
     height_ += diff.y_ * lpTimeManager.GetDeltaTimeF() * speedY_;
 
-
+    // 注視点作成(プレイヤーの周りを円状に)
     auto pos = pos_ + offset_;
     auto target = MyUtility::VGet(pos + Vector3f{
         std::sinf(angle_.y_) * radius,
         height_,
         std::cosf(angle_.y_) * radius });
 
+    // ライトの位置変更
     SetCameraPositionAndTargetAndUpVec(MyUtility::VGet(pos),
         target,
         VECTOR{ 0.0f,1.0f,0.0f });
 
-    ChangeLightTypePoint(MyUtility::VGet(pos), 700.0f, 1.0f, 0.01f, 0.0f);
-
-    //ChangeLightTypeSpot(MyUtility::VGet(pos),
-    //    MyUtility::VGet({ angle_.x_,angle_.y_,MyUtility::DegToRad(0) }),
-    //    MyUtility::DegToRad(90.0f),
-    //    MyUtility::DegToRad(45.0f),
-    //    1000.0f,
-    //    0.0f,0.01f,0.0f);
+    SetLightPositionHandle(spotLight_, MyUtility::VGet(pos));
+    SetLightDirectionHandle(spotLight_, VSub(target, MyUtility::VGet(pos)));
 }
 
 void Camera::SetTarget(std::weak_ptr<BaseObject> target)

@@ -16,7 +16,7 @@
 #include "../../Scene/SceneManager.h"
 
 Player::Player(Vector3f pos, Vector3f angle, Vector3f scale)
-	:BaseObject(pos, angle, scale)
+	:BaseObject(pos, angle, scale,ObjectType::Player)
 {
 	Init();
 }
@@ -86,7 +86,7 @@ bool Player::Move(float& delta)
 	}
 
 	pos_ += velocity;
-
+	_dbgDrawFormatString(100, 100, 0xff, "%f:%f:%f", pos_.x_, pos_.y_, pos_.z_);
 	return true;
 }
 

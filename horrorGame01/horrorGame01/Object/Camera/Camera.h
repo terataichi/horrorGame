@@ -24,5 +24,7 @@ private:
     Vector3f offset_;
     float height_;
     float speedY_;
+    // ライトのハンドル保持用
+    int spotLight_;
 };
 

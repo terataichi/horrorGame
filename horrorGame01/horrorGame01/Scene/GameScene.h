@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include <memory>
+#include <vector>
 
 class BaseObject;
 class Camera;
@@ -26,6 +27,8 @@ public:
 private:
 	std::shared_ptr<BaseObject> stage_;
 	std::shared_ptr<BaseObject> player_;
+	std::vector<std::shared_ptr<BaseObject>> objVec_;
+
 	int bright_;								// –¾‚é‚³
 };
 

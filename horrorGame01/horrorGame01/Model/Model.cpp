@@ -1,11 +1,12 @@
 #include "Model.h"
 #include <DxLib.h>
+#include <cassert>
 
 #include "../_debug/_DebugConOut.h"
 #include "../MyUtility.h"
 
-Model::Model(Vector3f pos, Vector3f angle, Vector3f scale, Vector3f localAngle) 
-	:BaseObject(pos, angle, scale),localAngle_(localAngle)
+Model::Model(Vector3f pos, Vector3f angle, Vector3f scale, Vector3f localAngle)
+	:pos_(pos),angle_(angle),scale_(scale),localAngle_(localAngle)
 {
 	Init();
 }
@@ -16,7 +17,8 @@ Model::~Model()
 
 bool Model::LoadModel(std::string str)
 {
-	modelHandle_ = MV1LoadModel("Resource/Model/untitled.mv1");
+	std::string modelPath= "Resource/Model/";
+	modelHandle_ = MV1LoadModel((modelPath + str).c_str());
 
 	if (modelHandle_ == -1)
 	{
@@ -41,6 +43,7 @@ bool Model::LoadModelAndAnimation(std::string str)
 	if (!LoadModel(str))
 	{
 		TRACE("LoadModelAndAnimation\n");
+		assert(!"モデル読み込み失敗");
 		return false;
 	}
 
@@ -59,7 +62,7 @@ bool Model::LoadModelAndAnimation(std::string str)
 
 	if (i == 0)
 	{
-		TRACE("アニメーション読み込み失敗 : %s \n", str.c_str());
+		TRACE("アニメーションなし : %s \n", str.c_str());
 		return false;
 	}
 

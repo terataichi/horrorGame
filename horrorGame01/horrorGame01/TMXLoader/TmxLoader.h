@@ -2,8 +2,8 @@
 #include <map>
 #include <string>
 #include <list>
-#include <DxLib.h>
 #include "../Common/Vector2.h"
+#include "../Common/Vector3.h"
 
 // rappidXml
 #include "../RapidXml/rapidxml.hpp"
@@ -13,9 +13,8 @@
 
 enum class DataType
 {
-	Object,
 	Item,
-	Right,
+	Light,
 	EnemyPoint,
 	StartPoint,
 };
@@ -25,10 +24,12 @@ struct ObjectData
 {
 	std::string type;
 	std::string name;
-	VECTOR pos;
-	VECTOR angle;
-	VECTOR scale;
+	Vector3f pos;
+	Vector3f angle;
+	Vector3f scale;
 };
+
+using TypeDataMap = std::map<DataType, std::list<ObjectData>>;
 
 class TmxLoader
 {
@@ -39,12 +40,15 @@ public:
 	bool LoadTmx(std::string fileName);
 	//rapidxml::xml_node<>& GetNode(std::string nodeName);
 	std::string GetTmxFileName(void);
+
+	TypeDataMap GetTypeData(void)const;
+
 private:
 	std::map<std::string, int>version_;
 	//std::string version_;											// 現在のファイルのVersionを定義して格納しておく
 
 	std::map<std::string, DataType> stoDataType_;					// ストリング変換機
-	std::map<DataType, std::list<ObjectData>>itemData_;				// タイプ別にデータを格納
+	TypeDataMap typeData_;											// タイプ別にデータを格納
 
 	std::string tmxFileName_;										// Tmxファイル名保存
 

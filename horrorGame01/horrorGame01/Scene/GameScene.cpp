@@ -8,7 +8,7 @@
 #include "../Object/Stage/Stage.h"
 #include "../Object/Character/Player.h"
 #include "../Object/Camera/Camera.h"
-
+#include "../Object/Item/Key.h"
 
 GameScene::GameScene()
 {
@@ -23,8 +23,14 @@ GameScene::~GameScene()
 
 void GameScene::Init(void)
 {
-	//TmxLoader tmx;
-	//tmx.LoadTmx("Resource/Tmx/SerializeAllData.xml");
+	TmxLoader tmx;
+	tmx.LoadTmx("Resource/Tmx/SerializeAllData.xml");
+
+	auto typeData = tmx.GetTypeData()[DataType::Item];
+	for (auto data : typeData)
+	{
+		objVec_.push_back(std::make_shared<Key>(data.pos, data.angle, data.scale));
+	}
 
 	stage_ = std::make_shared<Stage>(Vector3f{0.0f,0.0f,0.0f}, Vector3f{}, Vector3f{});
 	player_ = std::make_shared<Player>(Vector3f{ 0.0f,0.0f,0.0f }, Vector3f{}, Vector3f{});
@@ -48,7 +54,13 @@ void GameScene::DrawOwnScene(void)
 	SetDrawBright(bright_, bright_, bright_);
 
 	ClsDrawScreen();
-
+	// ƒJƒƒ‰‚Ì•`‰æ‚ªæ
 	camera_->Draw();
+
+	for (auto obj : objVec_)
+	{
+		obj->Draw();
+	}
+
 	stage_->Draw();
 }
