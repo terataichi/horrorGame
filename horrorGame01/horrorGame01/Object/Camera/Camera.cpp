@@ -7,9 +7,11 @@
 #include "../../Input/InputManager.h"
 #include "../../Common/TimeManager.h"
 #include "../../Input/Mouse.h"
+#include "../Character/Player.h"
+#include "../../_debug/_DebugConOut.h"
 
-Camera::Camera(Vector3f pos, Vector3f angle, Vector3f scale,Vector3f offset)
-    :BaseObject(pos, angle, scale,ObjectType::Camera),offset_(offset)
+Camera::Camera(Vector3f pos, Vector3f angle, Vector3f scale)
+    :BaseObject(pos, angle, scale,ObjectType::Camera)
 {
     Init();
 }
@@ -23,18 +25,7 @@ bool Camera::Init(void)
     SetCameraPositionAndAngle(
         MyUtility::VGet(pos_), angle_.x_, angle_.y_, angle_.z_
     );
-
-    spotLight_ = CreateSpotLightHandle(MyUtility::VGet(pos_),
-        MyUtility::VGet(pos_),
-        DX_PI_F / 2.0f,
-        DX_PI_F / 4.0f,
-        1000.0f, 
-        0.5f,
-        0.01f,
-        0.0f);
-
-    speedY_ = 10;
-
+    offset_ = {};
     return true;
 }
 
@@ -54,39 +45,57 @@ void Camera::Draw(void)
 {
     if (lpSceneMng.GetInputManager().expired())
     {
+        TRACE("Player : InputManagerが期限切れです");
         return;
-    };
+    }
+    auto mouse = lpSceneMng.GetInputManager().lock()->GetMouseInput();
+    if (mouse.expired())
+    {
+        TRACE("Player : GetしたMouseInputが期限切れです");
+        return;
+    }
+    auto mPos = mouse.lock()->GetPotision();
 
-    auto mng = lpSceneMng.GetInputManager();
-    auto mouse = mng.lock()->GetMouseInput();
+    auto player = std::dynamic_pointer_cast<Player>(targetObj_.lock());
+    auto clampPos = player->GetMouseRangeMotion();
+    auto height = player->GetGazeHeight();
 
-    // プレイヤーイの向いている方向
-    // XZで円を作る
-    auto diff = Vector2f{ lpSceneMng.ScreenSize() / 2 - mouse.lock()->GetPotision() };
-    float radius = 100;
-    // Yは高さを変えるだけなので
-    // 下限上限の設定
-    height_ = min(max(height_, -MAX_HEIGHT), MAX_HEIGHT);
-    height_ += diff.y_ * lpTimeManager.GetDeltaTimeF() * speedY_;
+    // 差分を求める
+    auto diff = Vector2(clampPos) - mPos;
+ 
 
     // 注視点作成(プレイヤーの周りを円状に)
+    float radius = 100;
     auto pos = pos_ + offset_;
     auto target = MyUtility::VGet(pos + Vector3f{
         std::sinf(angle_.y_) * radius,
-        height_,
+        height,
         std::cosf(angle_.y_) * radius });
 
-    // ライトの位置変更
     SetCameraPositionAndTargetAndUpVec(MyUtility::VGet(pos),
         target,
         VECTOR{ 0.0f,1.0f,0.0f });
 
-    SetLightPositionHandle(spotLight_, MyUtility::VGet(pos));
-    SetLightDirectionHandle(spotLight_, VSub(target, MyUtility::VGet(pos)));
+    // ライトの位置変更
+    //auto dir = std::atan2f(pos.x_ - target.x, pos.z_ - target.z);
+
+    //Vector3f lightPos = {
+    //    pos.x_ - sinf(dir) * 5.0f,
+    //    pos.y_,
+    //    pos.z_ - sinf(dir) * 5.0f
+    //};
+
+    //SetLightPositionHandle(spotLight_,MyUtility::VGet(lightPos));
+    //SetLightDirectionHandle(spotLight_, VSub(target, MyUtility::VGet(pos)));
+
 }
 
 void Camera::SetTarget(std::weak_ptr<BaseObject> target)
 {
     targetObj_ = target;
-    height_ = targetObj_.lock()->Potision().y_;
+}
+
+void Camera::SetOffset(Vector3f offset)
+{
+    offset_ = offset;
 }

@@ -29,11 +29,17 @@ public:
 	bool LoadModelAndAnimation(std::string str);
 
 	/// <summary>
+	/// ƒRƒŠƒWƒ‡ƒ“î•ñ\’z	
+	/// </summary>
+	/// <returns></returns>
+	int SetUpCollision(int flameIndex, Vector3 div);
+
+	/// <summary>
 	/// ---- Get,Set
 	/// </summary>
 	const Vector3f& LocalAngle(void)const;
 	void LocalAngle(Vector3f& angle);
-
+	const int& GetModelHandle(void)const;
 private:
 
 	Vector3f pos_;

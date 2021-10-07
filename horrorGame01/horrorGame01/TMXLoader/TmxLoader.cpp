@@ -55,6 +55,10 @@ bool TmxLoader::LoadTmx(std::string fileName)
         objData.scale.y_ = atof(data_node->first_node("scale")->first_node("y")->value());
         objData.scale.z_ = atof(data_node->first_node("scale")->first_node("z")->value());
 
+        objData.pos *= 100.0f;
+        objData.pos.x_ *= -1;
+        objData.pos.z_ *= -1;
+
         if (stoDataType_.count(objData.type))
         {
             typeData_[stoDataType_[objData.type]].push_back(objData);

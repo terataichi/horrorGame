@@ -10,12 +10,16 @@ Actor::~Actor()
 {
 }
 
+const int& Actor::GetModelHandle(void)
+{
+	return model_->GetModelHandle();
+}
+
 bool Actor::ModelInit(std::string modelPath)
 {
 
 	model_ = std::make_unique<Model>(pos_, angle_, scale_);
 	model_->LoadModelAndAnimation(modelPath);
-
 
 	return true;
 }

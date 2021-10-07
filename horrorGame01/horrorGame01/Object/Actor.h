@@ -15,6 +15,7 @@ public:
     Actor(Vector3f& pos, Vector3f& angle, Vector3f& scale,ObjectType type);
     ~Actor();
 
+    const int& GetModelHandle(void);
 protected:
     bool ModelInit(std::string modelPath);
     std::unique_ptr<Model>model_;

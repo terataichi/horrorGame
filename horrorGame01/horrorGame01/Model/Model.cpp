@@ -73,6 +73,11 @@ bool Model::LoadModelAndAnimation(std::string str)
 	return true;
 }
 
+int Model::SetUpCollision(int flameIndex, Vector3 div)
+{
+	return MV1SetupCollInfo(modelHandle_, flameIndex, div.x_, div.y_, div.z_);
+}
+
 const Vector3f& Model::LocalAngle(void) const
 {
 	return localAngle_;
@@ -81,6 +86,11 @@ const Vector3f& Model::LocalAngle(void) const
 void Model::LocalAngle(Vector3f& angle)
 {
 	localAngle_ = angle;
+}
+
+const int& Model::GetModelHandle(void) const
+{
+	return modelHandle_;
 }
 
 bool Model::Init(void)

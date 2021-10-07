@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
 
-#include "../BaseObject.h"
+#include "../Actor.h"
 
 class Model;
 
 class Stage :
-    public BaseObject
+    public Actor
 {
 public:
     Stage(Vector3f&& pos, Vector3f&& angle, Vector3f&& scale);
@@ -16,8 +16,8 @@ public:
     bool Update(void)override;
     void Draw(void)override;
 
+    void Hit(std::shared_ptr<BaseObject> hitObj_)override;
+    bool IsHit(std::shared_ptr<BaseObject> target)override;
 private:
-
-    std::unique_ptr<Model>model_;
 };
 

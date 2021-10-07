@@ -9,6 +9,35 @@ BaseObject::~BaseObject()
 {
 }
 
+void BaseObject::Hit(std::shared_ptr<BaseObject> hitObj_)
+{
+}
+
+void BaseObject::CheckHitCollision(std::shared_ptr<BaseObject> mySelf, std::vector<std::shared_ptr<BaseObject>> list)
+{
+    for (auto& obj : list)
+    {
+        // 自分自身ははじく
+        if (mySelf == obj)
+        {
+            continue;
+        }
+
+        // 当たり判定
+        if (mySelf->IsHit(obj))
+        {
+            // 当たったら当たった処理を呼び出す
+            obj->Hit(obj);
+        }
+    }
+}
+
+bool BaseObject::IsHit(std::shared_ptr<BaseObject> target)
+{
+    // 当たり判定しなくていい奴はオーバーライドさせなくていい
+    return false;
+}
+
 const Vector3f& BaseObject::Potision(void) const
 {
     return pos_;

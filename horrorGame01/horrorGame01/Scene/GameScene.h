@@ -4,6 +4,8 @@
 #include <vector>
 
 class BaseObject;
+class Stage;
+class Actor;
 class Camera;
 
 class GameScene
@@ -25,9 +27,9 @@ public:
 	void DrawOwnScene(void);
 
 private:
-	std::shared_ptr<BaseObject> stage_;
+	std::shared_ptr<Stage> stage_;
 	std::shared_ptr<BaseObject> player_;
-	std::vector<std::shared_ptr<BaseObject>> objVec_;
+	std::vector<std::shared_ptr<Actor>> objVec_;
 
 	int bright_;								// –¾‚é‚³
 };
