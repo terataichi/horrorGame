@@ -18,6 +18,7 @@ Camera::Camera(Vector3f pos, Vector3f angle, Vector3f scale)
 
 Camera::~Camera()
 {
+    targetObj_ = nullptr;
 }
 
 bool Camera::Init(void)
@@ -31,41 +32,28 @@ bool Camera::Init(void)
 
 bool Camera::Update(void)
 {
-    if (targetObj_.expired())
+    if (targetObj_ == nullptr)
     {
         return false;
     }
 
-    pos_ = targetObj_.lock()->Potision();
-    angle_ = targetObj_.lock()->Angle();
+    pos_ = targetObj_->Potision();
+    angle_ = targetObj_->Angle();
     return true;
 }
 
 void Camera::Draw(void)
 {
-    if (lpSceneMng.GetInputManager().expired())
+    auto player = dynamic_cast<Player*>(targetObj_);
+    // 一応ガード
+    if (!player)
     {
-        TRACE("Player : InputManagerが期限切れです");
         return;
     }
-    auto mouse = lpSceneMng.GetInputManager().lock()->GetMouseInput();
-    if (mouse.expired())
-    {
-        TRACE("Player : GetしたMouseInputが期限切れです");
-        return;
-    }
-    auto mPos = mouse.lock()->GetPotision();
-
-    auto player = std::dynamic_pointer_cast<Player>(targetObj_.lock());
-    auto clampPos = player->GetMouseRangeMotion();
     auto height = player->GetGazeHeight();
-
-    // 差分を求める
-    auto diff = Vector2(clampPos) - mPos;
  
-
     // 注視点作成(プレイヤーの周りを円状に)
-    float radius = 100;
+    float radius = player->GAZE_POINT_RADIUS;
     auto pos = pos_ + offset_;
     auto target = MyUtility::VGet(pos + Vector3f{
         std::sinf(angle_.y_) * radius,
@@ -76,21 +64,10 @@ void Camera::Draw(void)
         target,
         VECTOR{ 0.0f,1.0f,0.0f });
 
-    // ライトの位置変更
-    //auto dir = std::atan2f(pos.x_ - target.x, pos.z_ - target.z);
-
-    //Vector3f lightPos = {
-    //    pos.x_ - sinf(dir) * 5.0f,
-    //    pos.y_,
-    //    pos.z_ - sinf(dir) * 5.0f
-    //};
-
-    //SetLightPositionHandle(spotLight_,MyUtility::VGet(lightPos));
-    //SetLightDirectionHandle(spotLight_, VSub(target, MyUtility::VGet(pos)));
-
+    //DrawSphere3D(target, 5.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
 }
 
-void Camera::SetTarget(std::weak_ptr<BaseObject> target)
+void Camera::SetTarget(BaseObject* target)
 {
     targetObj_ = target;
 }

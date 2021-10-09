@@ -82,7 +82,7 @@ bool SceneManager::Init3D(void)
 	SetFogEnable(true);
 	SetFogColor(0, 0, 0);
 
-	SetUseLighting(true);
+	SetUseLighting(false);
 	SetLightEnable(false);
 
 	// 3D‚Ì”wŒiF

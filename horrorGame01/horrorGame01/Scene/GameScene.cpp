@@ -11,6 +11,8 @@
 #include "../Object/Camera/Camera.h"
 #include "../Object/Item/Key.h"
 
+#include "../MyUtility.h"
+
 GameScene::GameScene()
 {
 	TRACE("GameSceneê∂ê¨\n");
@@ -35,8 +37,9 @@ void GameScene::Init(void)
 	
 	stage_ = std::make_shared<Stage>(Vector3f{ 0.0f,0.0f,0.0f }, Vector3f{}, Vector3f{});
 
-	player_ = std::make_shared<Player>(Vector3f{ 0.0f,0.0f,0.0f }, Vector3f{}, Vector3f{}, stage_->GetModelHandle());
-	camera_->SetTarget(player_);
+	player_ = std::make_shared<Player>(Vector3f{ 0.0f,0.0f,0.0f }, Vector3f{0.0f,MyUtility::DegToRad(90),0.0f}, Vector3f{}, stage_->GetModelHandle());
+
+	camera_ = std::dynamic_pointer_cast<Player>(player_)->GetCamera();
 
 	bright_ = 255;
 }
@@ -62,6 +65,8 @@ void GameScene::DrawOwnScene(void)
 	ClsDrawScreen();
 	// ÉJÉÅÉâÇÃï`âÊÇ™êÊ
 	camera_->Draw();
+
+	player_->Draw();
 	stage_->Draw();
 	for (auto obj : objVec_)
 	{

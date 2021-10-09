@@ -13,12 +13,12 @@ public:
     bool Update(void)override;
     void Draw(void)override;
 
-    void SetTarget(std::weak_ptr<BaseObject> target);
+    void SetTarget(BaseObject* target);
     void SetOffset(Vector3f offset);
 private:
 
     // カメラが追従するオブジェクトのポインタ
-    std::weak_ptr<BaseObject> targetObj_;
+    BaseObject* targetObj_;
 
     Vector3f offset_;
     float speedY_;

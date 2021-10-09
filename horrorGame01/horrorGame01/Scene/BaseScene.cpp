@@ -12,7 +12,6 @@ BaseScene::BaseScene()
 	GetDrawScreenSize(&screenSize_.x_, &screenSize_.y_);
 	screenID_ = MakeScreen(screenSize_.x_, screenSize_.y_, true);
 
-	camera_ = std::make_shared<Camera>(Vector3f{}, Vector3f{}, Vector3f{}, Vector3f{ 0.0f,150.0f,0.0f });
 }
 
 BaseScene::~BaseScene()
