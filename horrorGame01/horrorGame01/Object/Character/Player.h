@@ -11,8 +11,8 @@ class Player
 	:public BaseObject
 {
 public:
-	// 注視点で使う半径
-	static constexpr float GAZE_POINT_RADIUS = 100.0f;
+	// 可動域と注視点で使う半径
+	static constexpr float GAZE_POINT_RADIUS = 5.0f;
 
 	Player(Vector3f pos,Vector3f angle,Vector3f scale,const int& stageModel);
 	~Player();
@@ -25,7 +25,7 @@ public:
 
 	// 現在のマウスの位置を可動域内にクランプして返す
 	// カメラでも使ってね
-	Vector2f GetMouseRangeMotion(void);
+	//Vector2f GetMouseRangeMotion(void);
 	const float& GetGazeHeight(void)const;
 
 	std::shared_ptr<Camera> GetCamera(void)const;
@@ -38,30 +38,28 @@ private:
 
 	void LightMove(float& delta);
 
+	// 移動スピード
 	static constexpr float MOVESPEED = 200.0f;
-	static constexpr float GAZEPOINT_SPEED = 10.0f;
-	static constexpr float GAZEPOINT_MAX_HEIGHT = 100.0f;
-
-	// マウスの可動域を変更するための倍率
-	static constexpr float MOUSE_RANGE_MIN = 0.25f;
-	static constexpr float MOUSE_RANGE_MAX = 0.75f;
-	static constexpr float MOUSE_RANGE_MIDDLE = 0.5f;
-
+	// 高さ制限
+	static constexpr float GAZEPOINT_MAX_HEIGHT = 20.0f;
 	// マウスの反応する感度
-	static constexpr float MOUSE_THRESHOLD = 3.0;
+	static constexpr float MOUSE_THRESHOLD = 4.0;
 
-	// 回転速度
-	float rotateSpeedX_;
-	Vector3f rotateVel_;
+	// ライトの可動域
+	static constexpr float RANGE_MOTION_HEIGHT = GAZE_POINT_RADIUS * 0.4f;
+	// 動いてないときの可動域
+	static constexpr float RANGE_MOTION_RADIAN = 45.0f * (DX_PI_F / 180.0f);
+
 	// 当たり判定用にステージのモデルハンドルをもらっておく
 	const int stageModel_;
 	// ライトハンドル保持用
 	int spotLight_;
 	Vector3f lightPos_;
 	// 可動域
-	Vector3f lightPosCenter_;
-	Vector3f lightPosMin_;
-	Vector3f lightPosMax_;
+	float lightAngleY_;
+	float lightHeight_;
+	float rangeMotionRadian_;
+	float rangeMotionHeight_;
 
 	// 注視点の高さ
 	float gazeHeight_;
@@ -72,8 +70,10 @@ private:
 	Vector3f velocity_;
 	Vector3f oldVelocity_;
 
-	// ---- カメラ
+	// 移動の入力キーが押されているか
+	bool isHitMoveKey_;
 
+	// ---- カメラ
 	bool chackMove_;
 	std::shared_ptr<Camera> camera_;
 	Vector3f cameraOffset_;
