@@ -82,7 +82,6 @@ bool Player::Update(void)
 	Move(delta);
 	// 可動域セット
 	LightMove(delta);
-	Rotate(delta);
 
 	// 最後にマウスの座標更新
 	SetMousePoint((lpSceneMng.ScreenSize() / 2).x_,(lpSceneMng.ScreenSize() / 2).y_);
@@ -162,20 +161,38 @@ bool Player::Move(float& delta)
 	}
 
 	// ステージの当たり判定
-	auto hit = MV1CollCheck_Line(stageModel_, 0, MyUtility::VGet(pos_), MyUtility::VGet(pos_ + velocity_));
+	//auto hit = MV1CollCheck_Line(stageModel_, 0, MyUtility::VGet(pos_), MyUtility::VGet(pos_ + velocity_));
+	
 
-	if (!hit.HitFlag)
+	// 床判定
+	auto planeHit = MV1CollCheck_Line(
+		stageModel_,
+		-1, MyUtility::VGet(pos_ + cameraOffset_),
+		MyUtility::VGet(pos_ - Vector3f{0.0f,(MOVESPEED * delta),0.0f}));
+
+	if (!planeHit.HitFlag)
+	{
+		pos_.y_ -= (MOVESPEED * delta);
+	}
+	else
+	{
+		if (planeHit.HitPosition.y > pos_.y_)
+		{
+			pos_.y_ = planeHit.HitPosition.y;
+		}
+	}
+
+	// 壁判定
+	auto wallHit = MV1CollCheck_Capsule(stageModel_,
+		-1,
+		MyUtility::VGet(pos_ + cameraOffset_ + velocity_ * 2.0f),
+		MyUtility::VGet(pos_ + (cameraOffset_ * 0.3f) + velocity_ * 2.0f),
+		10.0f);
+
+	if (wallHit.HitNum < 1)
 	{
 		pos_ += velocity_ * (MOVESPEED * delta);
 	}
-	return true;
-}
-
-bool Player::Rotate(float& delta)
-{	
-	// 差分を求める
-	//auto diff = Vector2(clampMPos) - mPos_;
-
 	return true;
 }
 
@@ -188,7 +205,8 @@ void Player::LightMove(float& delta)
 		// 可動域を０度にする
 		rangeMotionRadian_ = 0.0f;
 		rangeMotionHeight_ = 0.0f;
-		lightAngleY_ *= 0.98f;
+		lightAngleY_ *= 0.95f;
+		lightPos_.y_ = gazeHeight_;
 	}
 
 	auto vec = static_cast<Vector2f>((lpSceneMng.ScreenSize() / 2) - mPos_);

@@ -12,7 +12,7 @@ class Player
 {
 public:
 	// 可動域と注視点で使う半径
-	static constexpr float GAZE_POINT_RADIUS = 5.0f;
+	static constexpr float GAZE_POINT_RADIUS = 4.0f;
 
 	Player(Vector3f pos,Vector3f angle,Vector3f scale,const int& stageModel);
 	~Player();
@@ -33,8 +33,6 @@ private:
 
 	// 移動
 	bool Move(float& delta);
-	// 視点回転
-	bool Rotate(float& delta);
 
 	void LightMove(float& delta);
 
@@ -43,7 +41,7 @@ private:
 	// 高さ制限
 	static constexpr float GAZEPOINT_MAX_HEIGHT = 20.0f;
 	// マウスの反応する感度
-	static constexpr float MOUSE_THRESHOLD = 4.0;
+	static constexpr float MOUSE_THRESHOLD = 6.0;
 
 	// ライトの可動域
 	static constexpr float RANGE_MOTION_HEIGHT = GAZE_POINT_RADIUS * 0.4f;
