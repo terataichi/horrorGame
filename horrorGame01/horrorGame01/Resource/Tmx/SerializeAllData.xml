@@ -4,9 +4,9 @@
     <objType>Item</objType>
     <objName>Key</objName>
     <pos>
-      <x>-3.163</x>
-      <y>1.381</y>
-      <z>0.489</z>
+      <x>-15.236</x>
+      <y>1.066</y>
+      <z>8.669</z>
     </pos>
     <rota>
       <x>0</x>
@@ -29,9 +29,34 @@
     <objType>Item</objType>
     <objName>Key</objName>
     <pos>
-      <x>-3.163</x>
-      <y>0.631</y>
-      <z>2.883</z>
+      <x>-15.236</x>
+      <y>0.023</y>
+      <z>12.4</z>
+    </pos>
+    <rota>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+      <w>1</w>
+      <eulerAngles>
+        <x>-0</x>
+        <y>0</y>
+        <z>0</z>
+      </eulerAngles>
+    </rota>
+    <scale>
+      <x>1</x>
+      <y>1</y>
+      <z>1</z>
+    </scale>
+  </TestData>
+  <TestData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <objType>Item</objType>
+    <objName>Key</objName>
+    <pos>
+      <x>-0.943</x>
+      <y>1.066</y>
+      <z>7.197</z>
     </pos>
     <rota>
       <x>0</x>

@@ -96,8 +96,16 @@ void Player::Draw(void)
 {
 
 #ifdef _DEBUG
+	float radius = GAZE_POINT_RADIUS;
+	auto p1 = pos_ + cameraOffset_;
+	auto p2 = p1 + Vector3f{
+		std::sinf(angle_.y_) * radius,
+		gazeHeight_,
+		std::cosf(angle_.y_) * radius };
 
-
+	auto lightp = p1 + lightPos_;
+	DrawSphere3D(MyUtility::VGet(p2), 1.0f, 32, GetColor(0, 250, 0), GetColor(0, 250, 0), TRUE);
+	//DrawSphere3D(MyUtility::VGet(lightp), 1.0f, 32, GetColor(255, 0, 0), GetColor(255, 0, 0), TRUE);
 #endif // _DEBUG
 }
 
@@ -113,6 +121,51 @@ const float& Player::GetGazeHeight(void) const
 std::shared_ptr<Camera> Player::GetCamera(void) const
 {
 	return camera_;
+}
+
+void Player::CheckHItObject(std::shared_ptr<BaseObject> baseObj)
+{
+	
+	float radius = 10.0f;
+	auto p1 = pos_ + cameraOffset_;
+	auto p2 = p1 + Vector3f{
+		std::sinf(angle_.y_) * radius,
+		gazeHeight_,
+		std::cosf(angle_.y_) * radius };
+
+	//// レイの方向ベクトル
+	//Vector3f vec = p2 - p1;
+
+	//auto p3 = baseObj->Potision() - vec;
+
+	//float a = Dot(vec, vec);
+	//float b = Dot(vec, p3);
+	//float c = Dot(p3, p3) - radius * radius;
+
+	//float s = b * b - a * c;
+	//if (s < 0.0f)
+	//{
+	//	return;
+	//}
+	//s = sqrtf(s);
+	//float a1 = (b - s) / a;
+	//float a2 = (b + s) / a;
+
+	//if (a1 < 0.0f || a2 < 0.0f)
+	//{
+	//	return;
+	//}
+
+	//int u = 0;
+	auto check = HitCheck_Line_Sphere(MyUtility::VGet(p1),
+		MyUtility::VGet(p2),
+		MyUtility::VGet(baseObj->Potision()),
+		100.0f);
+
+	if (check)
+	{
+		baseObj->Active(false);
+	}
 }
 
 bool Player::Move(float& delta)
@@ -221,15 +274,15 @@ void Player::LightMove(float& delta)
 	mMove(vec.x_ > MOUSE_THRESHOLD, MyUtility::DegToRad(-90.0f));
 	mMove(vec.x_ < -MOUSE_THRESHOLD, MyUtility::DegToRad(90.0f));
 
-	float testSpeed = GAZE_POINT_RADIUS * 2.0f;
+	float heightSpeed = GAZE_POINT_RADIUS;
 	float heightVel = 0;
 	if (vec.y_ < -MOUSE_THRESHOLD)
 	{
-		heightVel = (-testSpeed * delta);
+		heightVel = (-heightSpeed * delta);
 	}
 	else if (vec.y_ > MOUSE_THRESHOLD)
 	{
-		heightVel = (testSpeed * delta);
+		heightVel = (heightSpeed * delta);
 	}
 	
 	// 高さの判定

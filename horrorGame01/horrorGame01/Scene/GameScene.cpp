@@ -48,10 +48,19 @@ UniqueBase GameScene::Update(UniqueBase scene)
 {
 	player_->Update();
 
-	for (auto obj : objVec_)
+	for (auto& obj : objVec_)
 	{
 		obj->Update();
+		std::dynamic_pointer_cast<Player>(player_)->CheckHItObject(obj);
 	}
+
+	// false
+	objVec_.erase(std::remove_if(objVec_.begin(), objVec_.end(),
+		[&](std::shared_ptr<BaseObject> obj)
+		{
+			return !obj->Active();
+		}), objVec_.end());
+
 	return scene;
 }
 
@@ -68,7 +77,7 @@ void GameScene::DrawOwnScene(void)
 
 	player_->Draw();
 	stage_->Draw();
-	for (auto obj : objVec_)
+	for (auto& obj : objVec_)
 	{
 		obj->Draw();
 	}

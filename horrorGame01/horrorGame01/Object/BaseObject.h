@@ -31,13 +31,6 @@ public:
 	virtual void Hit(std::shared_ptr<BaseObject> hitObj_);
 
 	/// <summary>
-	/// 自分と他のオブジェクトの当たり判定
-	/// </summary>
-	/// <param name="mySelf"></param>
-	/// <param name="list"></param>
-	void CheckHitCollision(std::shared_ptr<BaseObject> mySelf, std::vector<std::shared_ptr<BaseObject>> list);
-
-	/// <summary>
 	/// ここに当たり判定を書く
 	/// </summary>
 	/// <param name="target">判定するオブジェクト</param>
@@ -50,11 +43,12 @@ public:
 	const Vector3f& Potision(void)const;
 	const Vector3f& Angle(void)const;
 	const Vector3f& Scale(void)const;
+	bool Active(void)const;
 
 	void Potision(Vector3f& pos);
 	void Angle(Vector3f& angle);
 	void Scale(Vector3f& scale);
-
+	void Active(bool active);
 protected:
 	Vector3f pos_;
 	// ラジアン
@@ -62,5 +56,8 @@ protected:
 	Vector3f scale_;
 
 	const ObjectType objType_;
+
+	// falseにしたら消える
+	bool active_;
 };
 

@@ -3,6 +3,7 @@
 BaseObject::BaseObject(const Vector3f& pos, const Vector3f& angle, const Vector3f& scale, ObjectType type)
     :pos_(pos),angle_(angle),scale_(scale),objType_(type)
 {
+    active_ = true;
 }
 
 BaseObject::~BaseObject()
@@ -11,25 +12,6 @@ BaseObject::~BaseObject()
 
 void BaseObject::Hit(std::shared_ptr<BaseObject> hitObj_)
 {
-}
-
-void BaseObject::CheckHitCollision(std::shared_ptr<BaseObject> mySelf, std::vector<std::shared_ptr<BaseObject>> list)
-{
-    for (auto& obj : list)
-    {
-        // Ž©•ªŽ©g‚Í‚Í‚¶‚­
-        if (mySelf == obj)
-        {
-            continue;
-        }
-
-        // “–‚½‚è”»’è
-        if (mySelf->IsHit(obj))
-        {
-            // “–‚½‚Á‚½‚ç“–‚½‚Á‚½ˆ—‚ðŒÄ‚Ño‚·
-            obj->Hit(obj);
-        }
-    }
 }
 
 bool BaseObject::IsHit(std::shared_ptr<BaseObject> target)
@@ -53,6 +35,11 @@ const Vector3f& BaseObject::Scale(void) const
     return scale_;
 }
 
+bool BaseObject::Active(void) const
+{
+    return active_;
+}
+
 void BaseObject::Potision(Vector3f& pos)
 {
     pos_ = pos;
@@ -66,4 +53,9 @@ void BaseObject::Angle(Vector3f& ang)
 void BaseObject::Scale(Vector3f& scale)
 {
     scale_ = scale;
+}
+
+void BaseObject::Active(bool active)
+{
+    active_ = active;
 }

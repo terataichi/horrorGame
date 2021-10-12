@@ -12,7 +12,7 @@ class Player
 {
 public:
 	// 可動域と注視点で使う半径
-	static constexpr float GAZE_POINT_RADIUS = 4.0f;
+	static constexpr float GAZE_POINT_RADIUS = 30.0f;
 
 	Player(Vector3f pos,Vector3f angle,Vector3f scale,const int& stageModel);
 	~Player();
@@ -21,14 +21,17 @@ public:
 	bool Update(void)override;
 	void Draw(void)override;
 
-	void Hit(std::shared_ptr<BaseObject> hitObj_);
+	void Hit(std::shared_ptr<BaseObject> hitObj);
 
-	// 現在のマウスの位置を可動域内にクランプして返す
-	// カメラでも使ってね
-	//Vector2f GetMouseRangeMotion(void);
+	// カメラで使う
 	const float& GetGazeHeight(void)const;
 
 	std::shared_ptr<Camera> GetCamera(void)const;
+
+	/// <summary>
+	/// プレイヤーと配置されたオブジェクト
+	/// </summary>
+	void CheckHItObject(std::shared_ptr<BaseObject> baseObj);
 private:
 
 	// 移動

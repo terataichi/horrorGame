@@ -15,7 +15,7 @@ Stage::~Stage()
 bool Stage::Init(void)
 {
 	model_ = std::make_unique<Model>(pos_, angle_, scale_, angle_);
-	if(model_->LoadModel("untitled.mv1"))
+	if(model_->LoadModel("Stage01.mv1"))
 	{
 		model_->SetUpCollision(-1, { 8,8,8 });
 	}

@@ -29,7 +29,7 @@ public:
 private:
 	std::shared_ptr<Stage> stage_;
 	std::shared_ptr<BaseObject> player_;
-	std::vector<std::shared_ptr<Actor>> objVec_;
+	std::vector<std::shared_ptr<BaseObject>> objVec_;
 
 	int bright_;								// –¾‚é‚³
 };

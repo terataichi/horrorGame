@@ -8,9 +8,10 @@ TaskManager::TaskManager()
 bool TaskManager::TaskUpdate(void)
 {
     int cnt = 0;
+    bool endTask = false;
     for (auto& task : taskList_)
     {
-        task->Update();
+        endTask = task->Update();
 
         // 次のアップデートを回すかどうか
         if (!task->NextUpdate())
@@ -19,6 +20,10 @@ bool TaskManager::TaskUpdate(void)
         }
         cnt++;
     }
+    //if (endTask)
+    //{
+    //    taskList_.
+    //}
 
     return false;
 }
